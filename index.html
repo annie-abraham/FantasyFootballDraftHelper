@@ -25,7 +25,6 @@
 html{height:100%}
 body{font-family:var(--body);background:var(--bg);color:var(--chalk);height:100dvh;display:flex;flex-direction:column;overflow:hidden;font-size:14px;line-height:1.4}
 
-/* HEADER */
 header{height:var(--hh);background:var(--panel);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:16px;flex-shrink:0}
 .wordmark{font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--signal);flex-shrink:0}
 .hd-meta{display:flex;flex-direction:column;gap:1px}
@@ -35,32 +34,25 @@ header{height:var(--hh);background:var(--panel);border-bottom:1px solid var(--bo
 .clock-badge{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.05em;padding:5px 12px;border-radius:20px;border:1px solid var(--border);color:var(--muted);background:var(--panel2);transition:all .3s;white-space:nowrap}
 .clock-badge.live{color:var(--signal);border-color:var(--signal);background:var(--signal-glow);box-shadow:0 0 10px var(--signal-glow)}
 
-/* PICK TRACK */
 .track{height:var(--th);background:var(--panel);border-bottom:1px solid var(--border);padding:0 16px;display:flex;align-items:center;gap:12px;flex-shrink:0;overflow-x:auto;scrollbar-width:none}
 .track::-webkit-scrollbar{display:none}
 .track-lbl{font-family:var(--mono);font-size:9px;font-weight:700;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;flex-shrink:0}
 .track-dots{display:flex;align-items:center;gap:0;flex:1;justify-content:space-between}
 .t-pick{display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;min-width:28px}
 .t-dot{width:7px;height:7px;border-radius:50%;background:var(--dim);transition:all .2s;flex-shrink:0}
-.t-dot.past{background:var(--muted)}
-.t-dot.now{background:var(--signal);box-shadow:0 0 6px var(--signal);transform:scale(1.6)}
-.t-dot.mine{background:var(--signal-dim);border:1px solid var(--signal)}
-.t-rnd{font-family:var(--mono);font-size:8px;color:var(--muted);line-height:1}
-.t-rnd.now{color:var(--signal);font-weight:700}
+.t-dot.past{background:var(--muted)}.t-dot.now{background:var(--signal);box-shadow:0 0 6px var(--signal);transform:scale(1.6)}.t-dot.mine{background:var(--signal-dim);border:1px solid var(--signal)}
+.t-rnd{font-family:var(--mono);font-size:8px;color:var(--muted);line-height:1}.t-rnd.now{color:var(--signal);font-weight:700}
 
-/* TABS */
 .tab-bar{display:none;background:var(--panel);border-bottom:1px solid var(--border);flex-shrink:0}
 .tab-bar button{flex:1;padding:9px;background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-size:11px;font-weight:700;font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em;cursor:pointer;transition:all .15s}
 .tab-bar button.active{color:var(--signal);border-bottom-color:var(--signal)}
 
-/* MAIN */
 main{flex:1;display:grid;grid-template-columns:1fr 1fr 220px;min-height:0;overflow:hidden}
 .panel{display:flex;flex-direction:column;border-right:1px solid var(--border);overflow:hidden;min-height:0}
 .panel:last-child{border-right:none}
 .ph{padding:10px 12px;border-bottom:1px solid var(--border);background:var(--panel);flex-shrink:0}
 .ph-lbl{font-family:var(--mono);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin-bottom:8px}
 
-/* FILTERS */
 .pf-row{display:flex;gap:4px;margin-bottom:8px;flex-wrap:wrap}
 .pf{padding:3px 7px;border-radius:4px;border:1px solid var(--border);background:none;font-family:var(--mono);font-size:10px;font-weight:700;color:var(--muted);cursor:pointer;transition:all .15s}
 .pf:hover{color:var(--chalk);border-color:var(--dim)}
@@ -72,15 +64,12 @@ main{flex:1;display:grid;grid-template-columns:1fr 1fr 220px;min-height:0;overfl
 .pf.active[data-p="K"]{background:var(--k-dim);color:var(--k);border-color:var(--k)}
 .pf.active[data-p="DST"]{background:var(--dst-dim);color:var(--dst);border-color:var(--dst)}
 .srch{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:var(--r);padding:6px 10px;color:var(--chalk);font-size:13px;font-family:var(--body);outline:none;transition:border-color .15s}
-.srch:focus{border-color:var(--signal)}
-.srch::placeholder{color:var(--muted)}
+.srch:focus{border-color:var(--signal)}.srch::placeholder{color:var(--muted)}
 
-/* BOARD */
 .player-list{flex:1;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
 .pi{display:grid;grid-template-columns:26px 32px 1fr auto;align-items:center;gap:8px;padding:7px 12px;border-bottom:1px solid var(--border);cursor:default;transition:background .1s}
 .pi:hover{background:var(--panel2)}
-.pi.tgt{border-left:2px solid var(--wr)}
-.pi.tgt .pn{color:var(--wr)}
+.pi.tgt{border-left:2px solid var(--wr)}.pi.tgt .pn{color:var(--wr)}
 .padp{font-family:var(--mono);font-size:11px;color:var(--muted);text-align:right;font-variant-numeric:tabular-nums}
 .pb{font-family:var(--mono);font-size:10px;font-weight:700;text-align:center;padding:2px 4px;border-radius:3px}
 .pb.QB{background:var(--qb-dim);color:var(--qb)}.pb.RB{background:var(--rb-dim);color:var(--rb)}
@@ -91,42 +80,22 @@ main{flex:1;display:grid;grid-template-columns:1fr 1fr 220px;min-height:0;overfl
 .pr{display:flex;align-items:center;gap:5px}
 .dvs{font-family:var(--mono);font-size:11px;font-weight:700;min-width:24px;text-align:center;font-variant-numeric:tabular-nums}
 .pacts{display:none;gap:4px}
-.pi:hover .pacts{display:flex}
-.pi:hover .dvs{display:none}
+.pi:hover .pacts{display:flex}.pi:hover .dvs{display:none}
 .qa{padding:2px 7px;border-radius:3px;font-size:11px;font-weight:700;font-family:var(--mono);cursor:pointer;border:none}
-.qa.t{background:var(--panel2);color:var(--muted);border:1px solid var(--border)}
-.qa.t:hover{color:var(--chalk)}
+.qa.t{background:var(--panel2);color:var(--muted);border:1px solid var(--border)}.qa.t:hover{color:var(--chalk)}
 .qa.m{background:var(--signal);color:var(--bg)}
 
-/* UNDO STRIP */
 .undo-strip{display:none;align-items:center;justify-content:space-between;padding:6px 12px;border-top:1px solid var(--border);background:var(--panel);flex-shrink:0}
 .undo-lbl{font-size:11px;color:var(--muted);font-family:var(--mono);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px}
 .undo-btn{font-family:var(--mono);font-size:10px;font-weight:700;padding:3px 10px;border-radius:4px;border:1px solid var(--border);background:none;color:var(--muted);cursor:pointer;text-transform:uppercase;letter-spacing:.05em;flex-shrink:0}
 .undo-btn:hover{color:var(--chalk);border-color:var(--dim)}
 
-/* LOOKAHEAD */
 .lk-body{flex:1;overflow-y:auto;padding:12px;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
-
-/* RECOMMENDATION BLOCK */
-.rec-block{background:var(--signal-glow);border:1px solid var(--signal);border-radius:8px;padding:12px;margin-bottom:10px}
-.rec-header{display:flex;align-items:center;gap:6px;margin-bottom:8px;flex-wrap:wrap}
-.rec-arrow{font-family:var(--mono);font-size:9px;font-weight:700;color:var(--signal);letter-spacing:.08em;flex-shrink:0}
-.rec-name{font-size:14px;font-weight:600;color:var(--chalk);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.rec-dvs{font-family:var(--mono);font-size:11px;font-weight:700;padding:2px 7px;border-radius:4px;background:var(--signal);color:var(--bg);flex-shrink:0}
-.rec-rationale{font-size:12px;color:var(--chalk);line-height:1.65;opacity:.88;margin-bottom:10px}
-.rec-alts-label{font-family:var(--mono);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:5px}
-.rec-alt{display:flex;align-items:flex-start;gap:7px;padding:7px 8px;border-radius:5px;background:var(--panel2);margin-bottom:4px;border:1px solid var(--border)}
-.rec-alt-name{font-size:12px;font-weight:600;color:var(--chalk);flex-shrink:0}
-.rec-alt-why{font-size:11px;color:var(--muted);line-height:1.5;flex:1}
-.rec-alt-dvs{font-family:var(--mono);font-size:10px;font-weight:700;flex-shrink:0}
-
-/* LOOKAHEAD PICKS */
 .lk-block{margin-bottom:18px}
 .lk-label{font-family:var(--mono);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin-bottom:2px}
 .lk-label.live{color:var(--signal)}
 .lk-pick{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--chalk);line-height:1;margin-bottom:2px}
 .lk-win{font-family:var(--mono);font-size:10px;color:var(--muted);margin-bottom:8px}
-.lk-strat{font-size:11px;color:var(--te);line-height:1.55;padding:6px 8px;border-radius:4px;background:rgba(255,179,71,.07);border:1px solid rgba(255,179,71,.2);margin-bottom:8px}
 .lk-pg{margin-bottom:7px}
 .lk-pl{font-family:var(--mono);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;display:flex;align-items:center;gap:5px}
 .lk-pl.QB{color:var(--qb)}.lk-pl.RB{color:var(--rb)}.lk-pl.WR{color:var(--wr)}
@@ -138,7 +107,6 @@ main{flex:1;display:grid;grid-template-columns:1fr 1fr 220px;min-height:0;overfl
 .lk-chip span{font-family:var(--mono);font-size:9px;color:var(--muted);margin-left:2px}
 .lk-div{height:1px;background:var(--border);margin:14px 0}
 
-/* ROSTER */
 .rs-body{flex:1;overflow-y:auto;padding:10px;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
 .rs{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:4px;margin-bottom:2px;background:var(--panel2);min-height:31px}
 .rs-lbl{font-family:var(--mono);font-size:9px;font-weight:700;text-transform:uppercase;color:var(--muted);width:34px;flex-shrink:0;letter-spacing:.04em}
@@ -150,12 +118,10 @@ main{flex:1;display:grid;grid-template-columns:1fr 1fr 220px;min-height:0;overfl
 .rs-pos.K{background:var(--k-dim);color:var(--k)}.rs-pos.DST{background:var(--dst-dim);color:var(--dst)}
 .rs-sep{height:1px;background:var(--border);margin:5px 0}
 
-/* INPUT BAR */
 .ibar{height:var(--bh);background:var(--panel);border-top:1px solid var(--border);display:flex;align-items:center;gap:8px;padding:0 16px;flex-shrink:0;position:relative}
 .ac-wrap{flex:1;position:relative}
 .pi-inp{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:var(--r);padding:10px 14px;color:var(--chalk);font-size:14px;font-family:var(--body);outline:none;transition:border-color .15s}
-.pi-inp:focus{border-color:var(--signal)}
-.pi-inp::placeholder{color:var(--muted)}
+.pi-inp:focus{border-color:var(--signal)}.pi-inp::placeholder{color:var(--muted)}
 .ac-drop{position:absolute;bottom:calc(100% + 8px);left:0;right:0;background:var(--panel);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:0 -8px 24px rgba(0,0,0,.6);z-index:100}
 .ac-drop.hidden{display:none}
 .ac-row{display:flex;align-items:center;gap:8px;padding:8px 12px;cursor:pointer;font-size:13px;transition:background .1s}
@@ -163,22 +129,13 @@ main{flex:1;display:grid;grid-template-columns:1fr 1fr 220px;min-height:0;overfl
 .ac-adp{font-family:var(--mono);font-size:10px;color:var(--muted);margin-left:auto}
 .act{padding:10px 14px;border-radius:var(--r);font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;border:none;white-space:nowrap;transition:opacity .15s}
 .act:disabled{opacity:.3;cursor:not-allowed}
-.act.theirs{background:var(--panel2);color:var(--muted);border:1px solid var(--border)}
-.act.theirs:not(:disabled):hover{color:var(--chalk)}
+.act.theirs{background:var(--panel2);color:var(--muted);border:1px solid var(--border)}.act.theirs:not(:disabled):hover{color:var(--chalk)}
 .act.mine{background:var(--signal);color:var(--bg)}
 
-/* UTILS */
 .empty-st{padding:28px 16px;text-align:center;color:var(--muted);font-size:13px}
-::-webkit-scrollbar{width:3px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
 
-@media(max-width:860px){
-  main{grid-template-columns:1fr}
-  .tab-bar{display:flex}
-  .panel{display:none}
-  .panel.tab-on{display:flex}
-}
+@media(max-width:860px){main{grid-template-columns:1fr}.tab-bar{display:flex}.panel{display:none}.panel.tab-on{display:flex}}
 @media(max-width:400px){.wordmark{display:none}}
 </style>
 </head>
@@ -228,7 +185,7 @@ main{flex:1;display:grid;grid-template-columns:1fr 1fr 220px;min-height:0;overfl
   </section>
 
   <section class="panel" id="panel-lookahead">
-    <div class="ph"><div class="ph-lbl">Recommendations &amp; Lookahead</div></div>
+    <div class="ph"><div class="ph-lbl">Lookahead</div></div>
     <div class="lk-body" id="lk-body"></div>
   </section>
 
@@ -351,13 +308,11 @@ const PLAYERS=[
   {n:"Kaytron Allen",p:"RB",adp:195},{n:"Aaron Rodgers",p:"QB",adp:196},
   {n:"Chris Bell",p:"WR",adp:197},{n:"Kimani Vidal",p:"RB",adp:198},
   {n:"Gunnar Helm",p:"TE",adp:199},{n:"Ryan Flournoy",p:"WR",adp:200},
-  // Kickers — long FG scoring: distance÷10 pts; tier matters
   {n:"Justin Tucker",p:"K",adp:201},{n:"Evan McPherson",p:"K",adp:202},
   {n:"Brandon Aubrey",p:"K",adp:203},{n:"Harrison Butker",p:"K",adp:204},
   {n:"Tyler Bass",p:"K",adp:205},{n:"Jake Moody",p:"K",adp:206},
   {n:"Cameron Dicker",p:"K",adp:207},{n:"Ka'imi Fairbairn",p:"K",adp:208},
   {n:"Jake Elliott",p:"K",adp:209},{n:"Matt Gay",p:"K",adp:210},
-  // DSTs
   {n:"Ravens DST",p:"DST",adp:211},{n:"Eagles DST",p:"DST",adp:212},
   {n:"Chiefs DST",p:"DST",adp:213},{n:"49ers DST",p:"DST",adp:214},
   {n:"Cowboys DST",p:"DST",adp:215},{n:"Bills DST",p:"DST",adp:216},
@@ -367,35 +322,9 @@ const PLAYERS=[
 
 const TARGETS=new Set(["De'Zhaun Stribling","MarShawn Lloyd"]);
 const SKILL=['QB','RB','WR','TE'];
-// Known handcuff pairs — verified against new team assignments
-const HC={
-  "Bijan Robinson":"Brian Robinson",         // ATL–ATL
-  "Brian Robinson":"Bijan Robinson",         // ATL–ATL
-  "Kyren Williams":"Blake Corum",            // LAR–LAR
-  "Blake Corum":"Kyren Williams",            // LAR–LAR
-  "Breece Hall":"Braelon Allen",             // NYJ–NYJ
-  "James Cook":"Ray Davis",                  // BUF–BUF
-  "Tony Pollard":"Tyjae Spears",             // TEN–TEN
-  "Tyjae Spears":"Nicholas Singleton",       // TEN–TEN
-  "D'Andre Swift":"Kyle Monangai",           // CHI–CHI
-  "Chuba Hubbard":"Jonathon Brooks",         // CAR–CAR
-  "Jonathon Brooks":"Chuba Hubbard",         // CAR–CAR
-  "Josh Jacobs":"MarShawn Lloyd",            // GB–GB (MarShawn Lloyd is a personal target!)
-  "Kenneth Walker":"Emmett Johnson",         // KC–KC
-  "David Montgomery":"Woody Marks",          // HOU–HOU
-  "RJ Harvey":"J.K. Dobbins",               // DEN–DEN
-  "J.K. Dobbins":"RJ Harvey",               // DEN–DEN
-  "Jadarian Price":"Zach Charbonnet",        // SEA–SEA
-  "Zach Charbonnet":"Jadarian Price",        // SEA–SEA
-  "Jordan Mason":"Aaron Jones",              // MIN–MIN
-  "Saquon Barkley":"Tank Bigsby",            // PHI–PHI
-  "Derrick Henry":"Justice Hill",            // BAL–BAL
-  "Travis Etienne":"Alvin Kamara",           // NO–NO
-};
 
-// ── LEAGUE CONFIG ─────────────────────────────────────────────────────────────
+// ── CONFIG ────────────────────────────────────────────────────────────────────
 const DPOS=2,TEAMS=12,RNDS=14,TOTAL=TEAMS*RNDS;
-
 function calcMyPicks(){
   const a=[];
   for(let r=1;r<=RNDS;r++){
@@ -410,7 +339,7 @@ const MYSET=new Set(MY.map(p=>p.ov));
 // ── STATE ─────────────────────────────────────────────────────────────────────
 let cur=1,log=[],filt='ALL',sel=null,acIdx=-1;
 
-// ── CORE HELPERS ──────────────────────────────────────────────────────────────
+// ── HELPERS ───────────────────────────────────────────────────────────────────
 const gone=()=>new Set(log.map(d=>d.pl.adp));
 const availAll=()=>PLAYERS.filter(p=>!gone().has(p.adp));
 const myRos=()=>log.filter(d=>d.mine).map(d=>d.pl);
@@ -421,22 +350,19 @@ const adpWin=ov=>({lo:Math.max(1,ov-5),hi:ov+10});
 const fuzzy=(q,n)=>{if(!q)return true;const ql=q.toLowerCase(),nl=n.toLowerCase();return nl.includes(ql)||nl.split(/\s+/).some(w=>w.startsWith(ql));};
 
 // ── DYNAMIC DVS ───────────────────────────────────────────────────────────────
-// Objective: ADP-base value boosted/penalized by positional scarcity.
-// No roster bias — same DVS for all managers.
+// Base ADP value boosted/penalized by positional scarcity as players are drafted.
 function calcDVS(player){
   const baseVal=Math.max(4,100*(221-player.adp)/220);
-  if(!SKILL.includes(player.p)) return Math.round(Math.min(99,baseVal));
-
+  if(!SKILL.includes(player.p))return Math.round(Math.min(99,baseVal));
   const avail=availAll();
   const rem={};
   avail.filter(p=>SKILL.includes(p.p)).forEach(p=>{rem[p.p]=(rem[p.p]||0)+1;});
   const counts=SKILL.map(pos=>rem[pos]||0).filter(v=>v>0);
-  if(!counts.length) return Math.round(Math.min(99,baseVal));
+  if(!counts.length)return Math.round(Math.min(99,baseVal));
   const avg=counts.reduce((s,v)=>s+v,0)/counts.length;
   const posCount=rem[player.p]||1;
-  // Scarce position → boost; abundant → penalty. Capped to prevent extremes.
-  const scarcityMult=Math.min(1.75,Math.max(0.6,avg/posCount));
-  return Math.round(Math.min(99,baseVal*(0.5+0.5*scarcityMult)));
+  const mult=Math.min(1.75,Math.max(0.6,avg/posCount));
+  return Math.round(Math.min(99,baseVal*(0.5+0.5*mult)));
 }
 
 function dvsColor(dvs){
@@ -451,227 +377,6 @@ function scarcitySummary(){
   const avg=vals.reduce((s,v)=>s+v,0)/vals.length;
   const scarce=SKILL.filter(p=>(rem[p]||0)<avg*0.75);
   return scarce.length?`↑ Scarce: ${scarce.join(', ')}`:'';
-}
-
-// ── RECOMMENDATION ENGINE ─────────────────────────────────────────────────────
-// Roster need bonus — separate from DVS, used only for pick scoring.
-// Encodes draft strategy preferences: wait on QB (R5-7+), wait on TE (R4+),
-// K/DST in R12-13, personal targets get a 1-round-early boost.
-function needBonus(pos,roster){
-  const c={};roster.forEach(p=>{c[p.p]=(c[p.p]||0)+1;});
-  const rb=c.RB||0,wr=c.WR||0,te=c.TE||0,qb=c.QB||0,k=c.K||0,dst=c.DST||0;
-  const round=rnd(cur);
-  switch(pos){
-    case'RB':return rb===0?22:rb===1&&round<=6?14:rb===2&&round<=5?6:0;
-    case'WR':return wr===0?22:wr===1&&round<=7?14:wr===2&&round<=7?6:0;
-    // TE: wait strategy — penalize R1-3, reward only R4+
-    case'TE':
-      if(round<=2)return -14;
-      if(round===3)return te===0?-4:0;
-      return te===0&&round>=4?10:0;
-    // QB: wait strategy — strongly penalize R1-4, only reward R6+
-    case'QB':
-      if(round<=4)return -18;
-      if(round===5)return qb===0?-5:0;
-      return qb===0&&round>=6?10:qb===0&&round>=8?14:0;
-    // K/DST: prefer R12-13, not automatically R14
-    case'K': return k===0&&round>=12?20:k===0&&round===11?6:0;
-    case'DST':return dst===0&&round>=12?20:dst===0&&round===11?6:0;
-    default:return 0;
-  }
-}
-
-// Urgency bonus: pushes up players who may not survive to next pick
-function survBonus(player,nextPickOv){
-  if(!nextPickOv)return 0;
-  const picksUntil=nextPickOv-cur-1;
-  if(picksUntil<=0)return 0;
-  const avail=availAll();
-  const betterSamePos=avail.filter(p=>p.p===player.p&&p.adp<=player.adp+3).length;
-  if(betterSamePos<=2&&picksUntil>=8)return 14;
-  if(betterSamePos<=4&&picksUntil>=10)return 8;
-  return 0;
-}
-
-function scorePlayer(pl,nextPickOv){
-  // Personal targets: valued ~1 round higher than ADP to secure them early
-  const targetBonus=TARGETS.has(pl.n)?16:0;
-  // Handcuff bonus: if user drafted the starter, their HC is more valuable
-  const roster=myRos();
-  const hcBonus=(()=>{
-    const round=rnd(cur);
-    if(round<8||pl.p!=='RB')return 0;
-    // Is this player a handcuff for someone the user drafted?
-    const myStarters=roster.filter(r=>r.p==='RB').map(r=>r.n);
-    const isHC=myStarters.some(s=>HC[s]===pl.n);
-    return isHC?12:0;
-  })();
-  return calcDVS(pl)+needBonus(pl.p,roster)+survBonus(pl,nextPickOv)+targetBonus+hcBonus;
-}
-
-function buildRationale(pick,alts,nextPick){
-  const avail=availAll();
-  const roster=myRos();
-  const c={};roster.forEach(p=>{c[p.p]=(c[p.p]||0)+1;});
-  const rem={};
-  avail.filter(p=>SKILL.includes(p.p)).forEach(p=>{rem[p.p]=(rem[p.p]||0)+1;});
-  const vals=SKILL.filter(p=>rem[p]).map(p=>rem[p]);
-  const avg=vals.length?vals.reduce((s,v)=>s+v,0)/vals.length:20;
-  const posCount=rem[pick.p]||0;
-  const round=rnd(cur);
-  const lines=[];
-
-  // Personal target callout
-  if(TARGETS.has(pick.n)){
-    const adpRound=rnd(pick.adp);
-    lines.push(`${pick.n} is one of your personal targets — you've indicated comfort drafting ~1 round early (Sleeper ADP suggests R${adpRound}) to secure him rather than risk losing him.`);
-  }
-
-  // Sentence 1: why this pick / position
-  else if(pick.p==='QB'&&round>=5){
-    lines.push(`${pick.n} is the top QB available in this window (DVS ${pick.dvs}) — given your wait-on-QB strategy, R${round} is now the right time to address the position.`);
-  } else if(pick.p==='QB'&&round<=4){
-    // Should rarely happen due to needBonus penalty but cover it
-    lines.push(`${pick.n} offers unusual early value (DVS ${pick.dvs}) — this is an exception to your wait-on-QB preference. Proceed only if the value gap over RB/WR alternatives is significant.`);
-  } else if(pick.p==='TE'&&round<=3){
-    lines.push(`${pick.n} represents an unusually large TE value fall — this is the exception scenario where elite TE value overrides your general wait strategy.`);
-  } else if(SKILL.includes(pick.p)&&posCount<avg*0.72){
-    lines.push(`${pick.p}s are running scarce (${posCount} remaining vs. ~${Math.round(avg)} avg at other positions) — their DVS reflects this premium and waiting risks missing the value tier.`);
-  } else if(pick.dvs>=72){
-    lines.push(`${pick.n} grades highest in this ADP window (DVS ${pick.dvs}) — clear top-of-tier value available right now.`);
-  } else {
-    lines.push(`${pick.n} (DVS ${pick.dvs}) is the best blend of ADP value and positional availability in this window.`);
-  }
-
-  // Sentence 2: survival / next-pick context
-  if(nextPick){
-    const nextWin=adpWin(nextPick.ov);
-    const nextSame=avail.filter(p=>p.p===pick.p&&p.adp>pick.adp&&p.adp<=nextWin.hi);
-    if(TARGETS.has(pick.n)){
-      // For personal targets, frame it as personal valuation vs. ADP
-      if(nextSame.length>=2){
-        lines.push(`His Sleeper ADP suggests he may survive to ${plbl(nextPick.ov)}, but given your personal valuation, take him now rather than risk it.`);
-      } else {
-        lines.push(`Unlikely to survive to ${plbl(nextPick.ov)} — taking him now aligns with your stated preference.`);
-      }
-    } else if(nextSame.length===0){
-      lines.push(`No comparable ${pick.p} projects into your ${plbl(nextPick.ov)} window — this is a now-or-never tier.`);
-    } else if(nextSame.length>=4){
-      lines.push(`${nextSame.length} ${pick.p}s of similar value likely survive to ${plbl(nextPick.ov)}, giving you flexibility, but ${pick.n} is the clear top of this group.`);
-    } else {
-      lines.push(`Only ${nextSame.length} comparable ${pick.p}${nextSame.length===1?'':'s'} project into ${plbl(nextPick.ov)} — moderate risk if you wait on this position.`);
-    }
-  }
-
-  // Sentence 3: roster construction, handcuff callout, or alt
-  const myRBs=roster.filter(r=>r.p==='RB').map(r=>r.n);
-  const hcStarter=myRBs.find(s=>HC[s]&&!gone().has(PLAYERS.find(p=>p.n===HC[s])?.adp));
-  if(round>=9&&hcStarter&&HC[hcStarter]){
-    const hcName=HC[hcStarter];
-    lines.push(`Consider targeting ${hcName} as a handcuff for your ${hcStarter} — if ${hcStarter} goes down, ${hcName} is the direct upside.`);
-  } else if(round>=14){
-    lines.push(`R14 — prioritize ceiling over median. Sleepers, handcuffs, and upside lottery tickets over safe depth.`);
-  } else {
-    const alt0=alts[0];
-    if(alt0&&alt0.p!==pick.p&&Math.abs(alt0.dvs-pick.dvs)<=6){
-      lines.push(`${alt0.n} (${alt0.p}, DVS ${alt0.dvs}) is a real pivot if you'd rather add ${alt0.p} depth — your current roster has ${c[alt0.p]||0} ${alt0.p}.`);
-    } else if(round<=5&&(c.RB||0)<2&&pick.p!=='RB'){
-      lines.push(`Still only ${c.RB||0} RB on your roster — if value converges, consider pivoting to RB here.`);
-    } else if(round<=7&&(c.WR||0)<2&&pick.p!=='WR'){
-      lines.push(`WR depth is thin (${c.WR||0} so far) — watch for WR value at this pick.`);
-    } else if(alt0){
-      lines.push(`${alt0.n} (DVS ${alt0.dvs}) is the closest alternative if you want ${alt0.p} depth instead.`);
-    }
-  }
-
-  return lines.join(' ');
-}
-
-function altWhy(alt,pick,nextPick){
-  const avail=availAll();
-  const round=rnd(cur);
-  if(TARGETS.has(alt.n)){
-    return`Personal target — you value him ~1 round above ADP. Take here if you want to guarantee him.`;
-  }
-  if(alt.p==='QB'&&round<=4){
-    return`Early QB — generally against your wait strategy. Only if the value gap is exceptional.`;
-  }
-  if(alt.p==='TE'&&round<=3){
-    return`Early TE — exception case only; your preference is to defer TE unless elite value falls.`;
-  }
-  if(!nextPick)return`Best ${alt.p} available in this ADP window.`;
-  const nextWin=adpWin(nextPick.ov);
-  const survive=avail.filter(p=>p.p===alt.p&&p.adp>alt.adp&&p.adp<=nextWin.hi);
-  if(alt.p===pick.p){
-    return`Same position, slightly lower DVS — take if you prefer ${alt.n}'s upside.`;
-  }
-  if(survive.length>=3){
-    return`${survive.length} ${alt.p}s survive to ${plbl(nextPick.ov)} — can wait, but this is the tier leader now.`;
-  }
-  return`Strong ${alt.p} value; tier thins after this pick.`;
-}
-
-function getRecommendation(myPickOv){
-  const avail=availAll();
-  const{lo,hi}=adpWin(myPickOv);
-  const windowed=avail.filter(p=>p.adp>=lo&&p.adp<=hi);
-  if(!windowed.length)return null;
-  const nxt=MY.find(p=>p.ov>myPickOv);
-  const nextOv=nxt?.ov;
-  const scored=windowed
-    .map(p=>({...p,dvs:calcDVS(p),score:scorePlayer(p,nextOv)}))
-    .sort((a,b)=>b.score-a.score);
-  const pick=scored[0];
-  const alts=scored.slice(1,3);
-  return{pick,alts,rationale:buildRationale(pick,alts,nxt),nextPick:nxt};
-}
-
-// ── LOOKAHEAD STRATEGY BLURB ──────────────────────────────────────────────────
-function lookaheadBlurb(pickOv){
-  const avail=availAll();
-  const{lo,hi}=adpWin(pickOv);
-  const windowed=avail.filter(p=>p.adp>=lo&&p.adp<=hi);
-  const round=rnd(pickOv);
-  if(!windowed.length)return'Slim pickings in this window — flex pick or best available.';
-
-  // Apply strategy filters: exclude positions you prefer to wait on
-  const skipQB=round<=4;
-  const skipTE=round<=2;
-
-  const byPos={};
-  windowed.forEach(p=>{
-    if(p.p==='QB'&&skipQB)return;
-    if(p.p==='TE'&&skipTE)return;
-    const dvs=calcDVS(p);
-    if(!byPos[p.p])byPos[p.p]={max:0,count:0,top:null};
-    byPos[p.p].count++;
-    if(dvs>byPos[p.p].max){byPos[p.p].max=dvs;byPos[p.p].top=p;}
-  });
-
-  const sorted=Object.entries(byPos).sort((a,b)=>b[1].max-a[1].max);
-  const top=sorted[0],second=sorted[1];
-  if(!top)return'Assess value at this pick.';
-
-  if(round>=12){
-    if(byPos.K||byPos.DST)
-      return`R${round} — K/DST window. Lock in a kicker (distance÷10 scoring rewards long-range specialists) or DST before the end-round scramble.`;
-  }
-  if(round>=10){
-    return`R${round} depth round — ${top[0]} leads this window (peak DVS ${top[1].max}, ${top[1].count} options). Target upside and handcuff value.`;
-  }
-
-  // QB/TE wait-strategy notes
-  const qbNote=skipQB?' (QB excluded — wait strategy)':'';
-  const teNote=skipTE?' (TE excluded — wait strategy)':'';
-  const stratNote=[qbNote,teNote].filter(Boolean).join('');
-
-  if(second&&top[1].max-second[1].max<=5){
-    return`${top[0]} (peak DVS ${top[1].max}) and ${second[0]} (${second[1].max}) are neck-and-neck here — let roster need be the tiebreaker.${stratNote}`;
-  }
-  if(second&&top[1].max>=(second[1].max||0)+10){
-    return`DVS clearly favors ${top[0]} in this window (peak ${top[1].max} vs. ${second[0]} at ${second[1].max}) — lean ${top[0]} unless already loaded.${stratNote}`;
-  }
-  return`${top[0]} leads this window (peak DVS ${top[1].max}, ${top[1].count} available)${second?` — ${second[0]} close at ${second[1].max}`:''}. Target by roster need.${stratNote}`;
 }
 
 // ── ROSTER SLOTS ──────────────────────────────────────────────────────────────
@@ -735,8 +440,7 @@ function renderBoard(){
 
   const sn=scarcitySummary();
   const se=document.getElementById('scarcity-note');
-  se.textContent=sn;
-  se.style.color=sn?'var(--te)':'var(--muted)';
+  se.textContent=sn;se.style.color=sn?'var(--te)':'var(--muted)';
 
   const el=document.getElementById('player-list');
   if(!list.length){el.innerHTML='<div class="empty-st">No players match</div>';return;}
@@ -758,12 +462,12 @@ function renderBoard(){
   }).join('');
 }
 
-// ── RENDER: LOOKAHEAD ─────────────────────────────────────────────────────────
+// ── RENDER: LOOKAHEAD (10 picks) ──────────────────────────────────────────────
 function renderLk(){
   const el=document.getElementById('lk-body');
   const gn=gone();
   const avail=PLAYERS.filter(p=>!gn.has(p.adp));
-  const upcoming=MY.filter(p=>p.ov>=cur).slice(0,5);
+  const upcoming=MY.filter(p=>p.ov>=cur).slice(0,10);
   if(!upcoming.length){el.innerHTML='<div class="empty-st">Draft complete</div>';return;}
 
   const PO=['RB','WR','QB','TE','K','DST'];
@@ -773,48 +477,13 @@ function renderLk(){
     const isFirst=i===0;
     const{lo,hi}=adpWin(pk.ov);
     const wd=avail.filter(p=>p.adp>=lo&&p.adp<=hi);
-    const lbl=isFirst?(onClock()?'NOW ON CLOCK':'NEXT PICK'):
-               i===1?'R+1':i===2?'R+2':i===3?'R+3':'R+4';
+    const lbl=isFirst?(onClock()?'NOW ON CLOCK':'NEXT PICK'):`R+${i}`;
+
     h+=`<div class="lk-block">
       <div class="lk-label${isFirst?' live':''}">${lbl}</div>
       <div class="lk-pick">${plbl(pk.ov)}</div>
       <div class="lk-win">ADP window ${lo}–${hi}</div>`;
 
-    if(isFirst){
-      // Full recommendation block for current/next pick
-      const rec=getRecommendation(pk.ov);
-      if(rec){
-        const{pick,alts,rationale,nextPick}=rec;
-        const pdvs=calcDVS(pick);
-        h+=`<div class="rec-block">
-          <div class="rec-header">
-            <span class="rec-arrow">→ PICK</span>
-            <span class="rec-name">${pick.n}</span>
-            <span class="pb ${pick.p}" style="flex-shrink:0;font-size:9px">${pick.p}</span>
-            <span class="rec-dvs">${pdvs}</span>
-          </div>
-          <div class="rec-rationale">${rationale}</div>`;
-        if(alts.length){
-          h+=`<div class="rec-alts-label">Alternatives</div>`;
-          alts.forEach(alt=>{
-            const advs=calcDVS(alt);
-            const why=altWhy(alt,pick,nextPick);
-            h+=`<div class="rec-alt">
-              <span class="pb ${alt.p}" style="font-size:9px;padding:2px 4px;flex-shrink:0">${alt.p}</span>
-              <span class="rec-alt-name">${alt.n}</span>
-              <span class="rec-alt-why">${why}</span>
-              <span class="rec-alt-dvs" style="color:${dvsColor(advs)}">${advs}</span>
-            </div>`;
-          });
-        }
-        h+=`</div>`;
-      }
-    } else {
-      // Strategy blurb for future picks
-      h+=`<div class="lk-strat">${lookaheadBlurb(pk.ov)}</div>`;
-    }
-
-    // Position chips (all picks)
     const byPos={};
     wd.forEach(p=>{(byPos[p.p]=byPos[p.p]||[]).push(p);});
     PO.forEach(pos=>{
@@ -860,7 +529,6 @@ function renderUndo(){
   document.getElementById('undo-lbl').textContent=`Last: ${last.pl.n} (${last.mine?'mine':'theirs'})`;
 }
 
-// ── FULL RENDER ───────────────────────────────────────────────────────────────
 function render(){renderHdr();renderTrack();renderBoard();renderLk();renderRoster();renderUndo();}
 
 // ── ACTIONS ───────────────────────────────────────────────────────────────────
@@ -930,7 +598,6 @@ function switchTab(tab,btn){
   document.getElementById('panel-'+tab).classList.add('tab-on');
 }
 
-// ── INIT ──────────────────────────────────────────────────────────────────────
 render();
 </script>
 </body>
