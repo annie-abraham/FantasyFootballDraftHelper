@@ -91,6 +91,16 @@ main{flex:1;display:grid;grid-template-columns:1fr 1fr 220px;min-height:0;overfl
 .undo-btn:hover{color:var(--chalk);border-color:var(--dim)}
 
 .lk-body{flex:1;overflow-y:auto;padding:12px;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+.rec-block{background:var(--signal-glow);border:1px solid var(--signal);border-radius:var(--r);padding:10px;margin-bottom:16px}
+.rec-header{font-family:var(--mono);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--signal);margin-bottom:7px}
+.rec-name{display:flex;align-items:center;gap:6px;font-size:15px;font-weight:600;margin-bottom:5px}
+.rec-dvs{font-family:var(--mono);font-size:12px;font-weight:700;margin-left:auto}
+.rec-rationale{font-size:11px;line-height:1.5;color:var(--chalk);opacity:.8;margin-bottom:9px}
+.rec-alts-label{font-family:var(--mono);font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:5px;padding-top:7px;border-top:1px solid var(--border)}
+.rec-alt{margin-bottom:7px}
+.rec-alt-name{display:flex;align-items:center;gap:5px;font-size:12px;font-weight:500;margin-bottom:2px}
+.rec-alt-dvs{font-family:var(--mono);font-size:10px;font-weight:700;margin-left:auto}
+.rec-alt-why{font-size:10px;line-height:1.45;color:var(--muted)}
 .lk-block{margin-bottom:18px}
 .lk-label{font-family:var(--mono);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin-bottom:2px}
 .lk-label.live{color:var(--signal)}
@@ -462,6 +472,76 @@ function renderBoard(){
   }).join('');
 }
 
+// ── RECOMMENDATION ENGINE ─────────────────────────────────────────────────────
+const nextAfter=ov=>{const n=MY.find(p=>p.ov>ov);return n?n.ov:null;};
+const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
+
+// Open starter slots only — bench/IR don't create need.
+function rosterNeeds(){
+  const need={};
+  buildSlots().forEach(s=>{
+    if(s.pl||s.id.startsWith('B')||s.id==='IR')return;
+    s.el.forEach(p=>{need[p]=(need[p]||0)+1;});
+  });
+  return need;
+}
+
+function scorePlayer(p,round,nextOv){
+  let s=calcDVS(p);
+  const need=rosterNeeds();
+  if(need[p.p])s+=Math.min(12,need[p.p]*6);
+  if(nextOv){
+    const gap=p.adp-nextOv;
+    if(gap>12)s-=10;        // safely survives — no need to reach
+    else if(gap>4)s-=4;
+    else if(gap<-6)s+=6;    // going before you pick again
+  }
+  if(p.p==='QB'&&round<=4)s-=30;              // wait on QB
+  if(p.p==='TE'&&round<=2)s-=30;              // wait on TE
+  if(p.p==='K'||p.p==='DST')s+=round>=13?25:-60;  // K/DST last two rounds only
+  if(TARGETS.has(p.n))s+=8;
+  return s;
+}
+
+function why(p,round,nextOv){
+  const bits=[],need=rosterNeeds(),dvs=calcDVS(p);
+  if(need[p.p])bits.push(`fills an open ${p.p} slot`);
+  if(dvs>=70)bits.push('top-tier value still on the board');
+  if(nextOv){
+    const gap=p.adp-nextOv;
+    if(gap<-6)bits.push(`ADP ${p.adp} is well ahead of your next pick at ${nextOv} — won't last`);
+    else if(gap>12)bits.push(`should still be there at ${nextOv} if you'd rather wait`);
+  }
+  if(TARGETS.has(p.n))bits.push('one of your named targets');
+  if(p.p==='K'||p.p==='DST')bits.push('roster filler round');
+  return bits.length?cap(bits.join('; '))+'.':`Best available by DVS (${dvs}).`;
+}
+
+function renderRec(){
+  if(cur>TOTAL)return'';
+  const pk=MY.find(p=>p.ov>=cur);
+  if(!pk)return'';
+  const nextOv=nextAfter(pk.ov);
+  const ranked=availAll()
+    .map(p=>({p,s:scorePlayer(p,pk.r,nextOv)}))
+    .sort((a,b)=>b.s-a.s).slice(0,3);
+  if(!ranked.length)return'';
+  const top=ranked[0].p,alts=ranked.slice(1).map(x=>x.p);
+  const td=calcDVS(top);
+  return`<div class="rec-block">
+    <div class="rec-header">Recommended — ${plbl(pk.ov)}${onClock()?' · ON CLOCK':''}</div>
+    <div class="rec-name"><span class="pb ${top.p}">${top.p}</span>${top.n}
+      <span class="rec-dvs" style="color:${dvsColor(td)}">${td}</span></div>
+    <div class="rec-rationale">${why(top,pk.r,nextOv)}</div>
+    <div class="rec-alts-label">Alternatives</div>
+    ${alts.map(a=>{const d=calcDVS(a);return`<div class="rec-alt">
+      <div class="rec-alt-name"><span class="pb ${a.p}">${a.p}</span>${a.n}
+        <span class="rec-alt-dvs" style="color:${dvsColor(d)}">${d}</span></div>
+      <div class="rec-alt-why">${why(a,pk.r,nextOv)}</div>
+    </div>`;}).join('')}
+  </div>`;
+}
+
 // ── RENDER: LOOKAHEAD (10 picks) ──────────────────────────────────────────────
 function renderLk(){
   const el=document.getElementById('lk-body');
@@ -471,7 +551,7 @@ function renderLk(){
   if(!upcoming.length){el.innerHTML='<div class="empty-st">Draft complete</div>';return;}
 
   const PO=['RB','WR','QB','TE','K','DST'];
-  let h='';
+  let h=renderRec();
 
   upcoming.forEach((pk,i)=>{
     const isFirst=i===0;
