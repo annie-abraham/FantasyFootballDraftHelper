@@ -634,8 +634,14 @@ function lookaheadBlurb(pickOv){
   const round=rnd(pickOv);
   if(!windowed.length)return'Slim pickings in this window — flex pick or best available.';
 
+  // Apply strategy filters: exclude positions you prefer to wait on
+  const skipQB=round<=4;
+  const skipTE=round<=2;
+
   const byPos={};
   windowed.forEach(p=>{
+    if(p.p==='QB'&&skipQB)return;
+    if(p.p==='TE'&&skipTE)return;
     const dvs=calcDVS(p);
     if(!byPos[p.p])byPos[p.p]={max:0,count:0,top:null};
     byPos[p.p].count++;
@@ -653,13 +659,19 @@ function lookaheadBlurb(pickOv){
   if(round>=10){
     return`R${round} depth round — ${top[0]} leads this window (peak DVS ${top[1].max}, ${top[1].count} options). Target upside and handcuff value.`;
   }
+
+  // QB/TE wait-strategy notes
+  const qbNote=skipQB?' (QB excluded — wait strategy)':'';
+  const teNote=skipTE?' (TE excluded — wait strategy)':'';
+  const stratNote=[qbNote,teNote].filter(Boolean).join('');
+
   if(second&&top[1].max-second[1].max<=5){
-    return`${top[0]} (peak DVS ${top[1].max}) and ${second[0]} (${second[1].max}) are neck-and-neck here — let roster need be the tiebreaker.`;
+    return`${top[0]} (peak DVS ${top[1].max}) and ${second[0]} (${second[1].max}) are neck-and-neck here — let roster need be the tiebreaker.${stratNote}`;
   }
   if(second&&top[1].max>=(second[1].max||0)+10){
-    return`DVS clearly favors ${top[0]} in this window (peak ${top[1].max} vs. ${second[0]} at ${second[1].max}) — lean ${top[0]} unless already loaded at the position.`;
+    return`DVS clearly favors ${top[0]} in this window (peak ${top[1].max} vs. ${second[0]} at ${second[1].max}) — lean ${top[0]} unless already loaded.${stratNote}`;
   }
-  return`${top[0]} leads this window (peak DVS ${top[1].max}, ${top[1].count} available)${second?` — ${second[0]} close at ${second[1].max}`:''}. Target by roster need.`;
+  return`${top[0]} leads this window (peak DVS ${top[1].max}, ${top[1].count} available)${second?` — ${second[0]} close at ${second[1].max}`:''}. Target by roster need.${stratNote}`;
 }
 
 // ── ROSTER SLOTS ──────────────────────────────────────────────────────────────
