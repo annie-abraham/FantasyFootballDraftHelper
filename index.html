@@ -11,13 +11,13 @@
 :root{
   --bg:#0A0E14;--panel:#111720;--panel2:#161D2B;--rail:#1E2A3D;--border:#243044;
   --chalk:#E8ECF2;--muted:#5A6680;--dim:#2A3555;
-  --signal:#00D4A0;--signal-dim:rgba(0,212,160,.14);--signal-glow:rgba(0,212,160,.07);
-  --qb:#FF6B4A;--qb-dim:rgba(255,107,74,.14);
-  --rb:#00D4A0;--rb-dim:rgba(0,212,160,.14);
-  --wr:#4A9FFF;--wr-dim:rgba(74,159,255,.14);
-  --te:#FFB347;--te-dim:rgba(255,179,71,.14);
-  --k:#B47FFF;--k-dim:rgba(180,127,255,.14);
-  --dst:#FF8C69;--dst-dim:rgba(255,140,105,.14);
+  --signal:#00D4A0;--signal-dim:rgba(0,212,160,.12);--signal-glow:rgba(0,212,160,.06);
+  --qb:#FF6B4A;--qb-dim:rgba(255,107,74,.13);
+  --rb:#00D4A0;--rb-dim:rgba(0,212,160,.13);
+  --wr:#4A9FFF;--wr-dim:rgba(74,159,255,.13);
+  --te:#FFB347;--te-dim:rgba(255,179,71,.13);
+  --k:#B47FFF;--k-dim:rgba(180,127,255,.13);
+  --dst:#FF8C69;--dst-dim:rgba(255,140,105,.13);
   --hh:56px;--th:38px;--bh:64px;--r:6px;
   --mono:'JetBrains Mono','Courier New',monospace;
   --body:'Inter',system-ui,sans-serif;
@@ -54,7 +54,7 @@ header{height:var(--hh);background:var(--panel);border-bottom:1px solid var(--bo
 .tab-bar button.active{color:var(--signal);border-bottom-color:var(--signal)}
 
 /* MAIN */
-main{flex:1;display:grid;grid-template-columns:1fr 264px 220px;min-height:0;overflow:hidden}
+main{flex:1;display:grid;grid-template-columns:1fr 300px 220px;min-height:0;overflow:hidden}
 .panel{display:flex;flex-direction:column;border-right:1px solid var(--border);overflow:hidden;min-height:0}
 .panel:last-child{border-right:none}
 .ph{padding:10px 12px;border-bottom:1px solid var(--border);background:var(--panel);flex-shrink:0}
@@ -77,18 +77,15 @@ main{flex:1;display:grid;grid-template-columns:1fr 264px 220px;min-height:0;over
 
 /* BOARD */
 .player-list{flex:1;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
-.pi{display:grid;grid-template-columns:26px 32px 1fr auto;align-items:center;gap:8px;padding:7px 12px;border-bottom:1px solid var(--border);cursor:default;transition:background .1s;position:relative}
+.pi{display:grid;grid-template-columns:26px 32px 1fr auto;align-items:center;gap:8px;padding:7px 12px;border-bottom:1px solid var(--border);cursor:default;transition:background .1s}
 .pi:hover{background:var(--panel2)}
 .pi.tgt{border-left:2px solid var(--wr)}
 .pi.tgt .pn{color:var(--wr)}
 .padp{font-family:var(--mono);font-size:11px;color:var(--muted);text-align:right;font-variant-numeric:tabular-nums}
 .pb{font-family:var(--mono);font-size:10px;font-weight:700;text-align:center;padding:2px 4px;border-radius:3px}
-.pb.QB{background:var(--qb-dim);color:var(--qb)}
-.pb.RB{background:var(--rb-dim);color:var(--rb)}
-.pb.WR{background:var(--wr-dim);color:var(--wr)}
-.pb.TE{background:var(--te-dim);color:var(--te)}
-.pb.K{background:var(--k-dim);color:var(--k)}
-.pb.DST{background:var(--dst-dim);color:var(--dst)}
+.pb.QB{background:var(--qb-dim);color:var(--qb)}.pb.RB{background:var(--rb-dim);color:var(--rb)}
+.pb.WR{background:var(--wr-dim);color:var(--wr)}.pb.TE{background:var(--te-dim);color:var(--te)}
+.pb.K{background:var(--k-dim);color:var(--k)}.pb.DST{background:var(--dst-dim);color:var(--dst)}
 .pn{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ttag{font-family:var(--mono);font-size:9px;color:var(--wr);font-weight:700;margin-left:4px}
 .pr{display:flex;align-items:center;gap:5px}
@@ -109,14 +106,31 @@ main{flex:1;display:grid;grid-template-columns:1fr 264px 220px;min-height:0;over
 
 /* LOOKAHEAD */
 .lk-body{flex:1;overflow-y:auto;padding:12px;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+
+/* RECOMMENDATION BLOCK */
+.rec-block{background:var(--signal-glow);border:1px solid var(--signal);border-radius:8px;padding:12px;margin-bottom:10px}
+.rec-header{display:flex;align-items:center;gap:6px;margin-bottom:8px;flex-wrap:wrap}
+.rec-arrow{font-family:var(--mono);font-size:9px;font-weight:700;color:var(--signal);letter-spacing:.08em;flex-shrink:0}
+.rec-name{font-size:14px;font-weight:600;color:var(--chalk);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rec-dvs{font-family:var(--mono);font-size:11px;font-weight:700;padding:2px 7px;border-radius:4px;background:var(--signal);color:var(--bg);flex-shrink:0}
+.rec-rationale{font-size:12px;color:var(--chalk);line-height:1.65;opacity:.88;margin-bottom:10px}
+.rec-alts-label{font-family:var(--mono);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:5px}
+.rec-alt{display:flex;align-items:flex-start;gap:7px;padding:7px 8px;border-radius:5px;background:var(--panel2);margin-bottom:4px;border:1px solid var(--border)}
+.rec-alt-name{font-size:12px;font-weight:600;color:var(--chalk);flex-shrink:0}
+.rec-alt-why{font-size:11px;color:var(--muted);line-height:1.5;flex:1}
+.rec-alt-dvs{font-family:var(--mono);font-size:10px;font-weight:700;flex-shrink:0}
+
+/* LOOKAHEAD PICKS */
 .lk-block{margin-bottom:18px}
 .lk-label{font-family:var(--mono);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin-bottom:2px}
 .lk-label.live{color:var(--signal)}
 .lk-pick{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--chalk);line-height:1;margin-bottom:2px}
-.lk-win{font-family:var(--mono);font-size:10px;color:var(--muted);margin-bottom:10px}
+.lk-win{font-family:var(--mono);font-size:10px;color:var(--muted);margin-bottom:8px}
+.lk-strat{font-size:11px;color:var(--te);line-height:1.55;padding:6px 8px;border-radius:4px;background:rgba(255,179,71,.07);border:1px solid rgba(255,179,71,.2);margin-bottom:8px}
 .lk-pg{margin-bottom:7px}
 .lk-pl{font-family:var(--mono);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;display:flex;align-items:center;gap:5px}
-.lk-pl.QB{color:var(--qb)}.lk-pl.RB{color:var(--rb)}.lk-pl.WR{color:var(--wr)}.lk-pl.TE{color:var(--te)}.lk-pl.K{color:var(--k)}.lk-pl.DST{color:var(--dst)}
+.lk-pl.QB{color:var(--qb)}.lk-pl.RB{color:var(--rb)}.lk-pl.WR{color:var(--wr)}
+.lk-pl.TE{color:var(--te)}.lk-pl.K{color:var(--k)}.lk-pl.DST{color:var(--dst)}
 .lk-cnt{font-size:8px;background:var(--rail);padding:1px 4px;border-radius:3px;color:var(--muted)}
 .lk-chips{display:flex;flex-wrap:wrap;gap:3px}
 .lk-chip{font-size:10px;padding:2px 6px;border-radius:3px;background:var(--panel2);color:var(--chalk);border:1px solid var(--border);white-space:nowrap}
@@ -159,7 +173,6 @@ main{flex:1;display:grid;grid-template-columns:1fr 264px 220px;min-height:0;over
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
 
-/* RESPONSIVE */
 @media(max-width:860px){
   main{grid-template-columns:1fr}
   .tab-bar{display:flex}
@@ -175,7 +188,7 @@ main{flex:1;display:grid;grid-template-columns:1fr 264px 220px;min-height:0;over
   <div class="wordmark">Draft Room</div>
   <div class="hd-meta">
     <div class="hd-pick" id="hd-pick">Pick 1 / 168</div>
-    <div class="hd-sub" id="hd-sub">Round 1 &nbsp;·&nbsp; Pick 2 of 12</div>
+    <div class="hd-sub" id="hd-sub">Round 1</div>
   </div>
   <div class="hd-space"></div>
   <div class="clock-badge" id="clock-badge">1 pick away</div>
@@ -195,7 +208,7 @@ main{flex:1;display:grid;grid-template-columns:1fr 264px 220px;min-height:0;over
 <main>
   <section class="panel tab-on" id="panel-board">
     <div class="ph">
-      <div class="ph-lbl">Available Players</div>
+      <div class="ph-lbl">Available Players <span id="scarcity-note" style="font-weight:400;text-transform:none;letter-spacing:0;margin-left:4px;font-size:9px"></span></div>
       <div class="pf-row">
         <button class="pf active" data-p="ALL" onclick="setFilt('ALL',this)">ALL</button>
         <button class="pf" data-p="QB" onclick="setFilt('QB',this)">QB</button>
@@ -215,7 +228,7 @@ main{flex:1;display:grid;grid-template-columns:1fr 264px 220px;min-height:0;over
   </section>
 
   <section class="panel" id="panel-lookahead">
-    <div class="ph"><div class="ph-lbl">Lookahead</div></div>
+    <div class="ph"><div class="ph-lbl">Recommendations &amp; Lookahead</div></div>
     <div class="lk-body" id="lk-body"></div>
   </section>
 
@@ -236,7 +249,7 @@ main{flex:1;display:grid;grid-template-columns:1fr 264px 220px;min-height:0;over
 </div>
 
 <script>
-// ── DATA ──────────────────────────────────────────────────────────
+// ── DATA ──────────────────────────────────────────────────────────────────────
 const PLAYERS=[
   {n:"Jahmyr Gibbs",p:"RB",adp:1},{n:"Bijan Robinson",p:"RB",adp:2},
   {n:"Ja'Marr Chase",p:"WR",adp:3},{n:"Puka Nacua",p:"WR",adp:4},
@@ -338,7 +351,7 @@ const PLAYERS=[
   {n:"Kaytron Allen",p:"RB",adp:195},{n:"Aaron Rodgers",p:"QB",adp:196},
   {n:"Chris Bell",p:"WR",adp:197},{n:"Kimani Vidal",p:"RB",adp:198},
   {n:"Gunnar Helm",p:"TE",adp:199},{n:"Ryan Flournoy",p:"WR",adp:200},
-  // Kickers — long FG upside matters (FG distance/10 pts)
+  // Kickers — long FG scoring: distance÷10 pts; tier matters
   {n:"Justin Tucker",p:"K",adp:201},{n:"Evan McPherson",p:"K",adp:202},
   {n:"Brandon Aubrey",p:"K",adp:203},{n:"Harrison Butker",p:"K",adp:204},
   {n:"Tyler Bass",p:"K",adp:205},{n:"Jake Moody",p:"K",adp:206},
@@ -351,46 +364,218 @@ const PLAYERS=[
   {n:"Steelers DST",p:"DST",adp:217},{n:"Jets DST",p:"DST",adp:218},
   {n:"Browns DST",p:"DST",adp:219},{n:"Vikings DST",p:"DST",adp:220},
 ];
-PLAYERS.forEach(pl=>{ pl.dvs=Math.max(4,Math.round(100*(221-pl.adp)/220)); });
-const TARGETS=new Set(["De'Zhaun Stribling","MarShawn Lloyd"]);
 
-// ── CONFIG ────────────────────────────────────────────────────────
+const TARGETS=new Set(["De'Zhaun Stribling","MarShawn Lloyd"]);
+const SKILL=['QB','RB','WR','TE'];
+
+// ── LEAGUE CONFIG ─────────────────────────────────────────────────────────────
 const DPOS=2,TEAMS=12,RNDS=14,TOTAL=TEAMS*RNDS;
 
 function calcMyPicks(){
-  const arr=[];
+  const a=[];
   for(let r=1;r<=RNDS;r++){
     const s=(r%2===1)?DPOS:(TEAMS-DPOS+1);
-    arr.push({r,s,ov:(r-1)*TEAMS+s});
+    a.push({r,s,ov:(r-1)*TEAMS+s});
   }
-  return arr;
+  return a;
 }
 const MY=calcMyPicks();
 const MYSET=new Set(MY.map(p=>p.ov));
 
-// ── STATE ─────────────────────────────────────────────────────────
-let cur=1, log=[], filt='ALL', sel=null, acIdx=-1;
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let cur=1,log=[],filt='ALL',sel=null,acIdx=-1;
 
-// ── HELPERS ───────────────────────────────────────────────────────
+// ── CORE HELPERS ──────────────────────────────────────────────────────────────
 const gone=()=>new Set(log.map(d=>d.pl.adp));
-const avail=()=>PLAYERS.filter(p=>!gone().has(p.adp));
+const availAll=()=>PLAYERS.filter(p=>!gone().has(p.adp));
 const myRos=()=>log.filter(d=>d.mine).map(d=>d.pl);
 const onClock=()=>MYSET.has(cur);
-const nxtMy=()=>MY.find(p=>p.ov>=cur);
 const rnd=ov=>Math.ceil(ov/TEAMS);
-const plbl=ov=>{const r=rnd(ov),s=ov-(r-1)*TEAMS;return`R${r}.${String(s).padStart(2,'0')}`};
-const win=ov=>({lo:Math.max(1,ov-5),hi:ov+10});
-const dvsCol=v=>v>=70?'var(--dvs-high)':v>=45?'var(--dvs-mid)':v>=25?'var(--dvs-low)':'var(--dvs-deep)';
-// dvs color vars missing — define inline
-const DC=v=>v>=70?'var(--signal)':v>=45?'var(--wr)':v>=25?'var(--te)':'var(--muted)';
+const plbl=ov=>{const r=rnd(ov),s=ov-(r-1)*TEAMS;return`R${r}.${String(s).padStart(2,'0')}`;};
+const adpWin=ov=>({lo:Math.max(1,ov-5),hi:ov+10});
+const fuzzy=(q,n)=>{if(!q)return true;const ql=q.toLowerCase(),nl=n.toLowerCase();return nl.includes(ql)||nl.split(/\s+/).some(w=>w.startsWith(ql));};
 
-function fuzzy(q,n){
-  if(!q)return true;
-  const ql=q.toLowerCase(),nl=n.toLowerCase();
-  return nl.includes(ql)||nl.split(/\s+/).some(w=>w.startsWith(ql));
+// ── DYNAMIC DVS ───────────────────────────────────────────────────────────────
+// Objective: ADP-base value boosted/penalized by positional scarcity.
+// No roster bias — same DVS for all managers.
+function calcDVS(player){
+  const baseVal=Math.max(4,100*(221-player.adp)/220);
+  if(!SKILL.includes(player.p)) return Math.round(Math.min(99,baseVal));
+
+  const avail=availAll();
+  const rem={};
+  avail.filter(p=>SKILL.includes(p.p)).forEach(p=>{rem[p.p]=(rem[p.p]||0)+1;});
+  const counts=SKILL.map(pos=>rem[pos]||0).filter(v=>v>0);
+  if(!counts.length) return Math.round(Math.min(99,baseVal));
+  const avg=counts.reduce((s,v)=>s+v,0)/counts.length;
+  const posCount=rem[player.p]||1;
+  // Scarce position → boost; abundant → penalty. Capped to prevent extremes.
+  const scarcityMult=Math.min(1.75,Math.max(0.6,avg/posCount));
+  return Math.round(Math.min(99,baseVal*(0.5+0.5*scarcityMult)));
 }
 
-// ── ROSTER SLOTS ─────────────────────────────────────────────────
+function dvsColor(dvs){
+  return dvs>=70?'var(--signal)':dvs>=50?'var(--wr)':dvs>=30?'var(--te)':'var(--muted)';
+}
+
+function scarcitySummary(){
+  const avail=availAll().filter(p=>SKILL.includes(p.p));
+  const rem={};avail.forEach(p=>{rem[p.p]=(rem[p.p]||0)+1;});
+  const vals=SKILL.filter(p=>rem[p]).map(p=>rem[p]);
+  if(!vals.length)return'';
+  const avg=vals.reduce((s,v)=>s+v,0)/vals.length;
+  const scarce=SKILL.filter(p=>(rem[p]||0)<avg*0.75);
+  return scarce.length?`↑ Scarce: ${scarce.join(', ')}`:'';
+}
+
+// ── RECOMMENDATION ENGINE ─────────────────────────────────────────────────────
+// Roster need bonus — separate from DVS, used only for pick scoring
+function needBonus(pos,roster){
+  const c={};roster.forEach(p=>{c[p.p]=(c[p.p]||0)+1;});
+  const rb=c.RB||0,wr=c.WR||0,te=c.TE||0,qb=c.QB||0,k=c.K||0,dst=c.DST||0;
+  const round=rnd(cur);
+  switch(pos){
+    case'RB':return rb===0?22:rb===1&&round<=6?14:rb===2&&round<=5?6:0;
+    case'WR':return wr===0?22:wr===1&&round<=7?14:wr===2&&round<=7?6:0;
+    case'TE':return te===0&&round>=3?12:te===0?5:0;
+    case'QB':return qb===0&&round>=6?10:qb===0&&round>=5?5:0;
+    case'K': return k===0&&round>=11?18:0;
+    case'DST':return dst===0&&round>=11?18:0;
+    default:return 0;
+  }
+}
+
+// Urgency bonus: pushes up players who may not survive to next pick
+function survBonus(player,nextPickOv){
+  if(!nextPickOv)return 0;
+  const picksUntil=nextPickOv-cur-1;
+  if(picksUntil<=0)return 0;
+  const avail=availAll();
+  const betterSamePos=avail.filter(p=>p.p===player.p&&p.adp<=player.adp+3).length;
+  if(betterSamePos<=2&&picksUntil>=8)return 14;
+  if(betterSamePos<=4&&picksUntil>=10)return 8;
+  return 0;
+}
+
+function scorePlayer(pl,nextPickOv){
+  return calcDVS(pl)+needBonus(pl.p,myRos())+survBonus(pl,nextPickOv);
+}
+
+function buildRationale(pick,alts,nextPick){
+  const avail=availAll();
+  const roster=myRos();
+  const c={};roster.forEach(p=>{c[p.p]=(c[p.p]||0)+1;});
+  const rem={};
+  avail.filter(p=>SKILL.includes(p.p)).forEach(p=>{rem[p.p]=(rem[p.p]||0)+1;});
+  const vals=SKILL.filter(p=>rem[p]).map(p=>rem[p]);
+  const avg=vals.length?vals.reduce((s,v)=>s+v,0)/vals.length:20;
+  const posCount=rem[pick.p]||0;
+  const round=rnd(cur);
+  const lines=[];
+
+  // Sentence 1: why this pick / position
+  if(SKILL.includes(pick.p)&&posCount<avg*0.72){
+    lines.push(`${pick.p}s are running scarce (${posCount} remaining vs. ~${Math.round(avg)} avg at other positions) — their DVS reflects this premium and waiting risks missing the value tier.`);
+  } else if(pick.dvs>=72){
+    lines.push(`${pick.n} grades highest in this ADP window (DVS ${pick.dvs}) — clear top-of-tier value available right now.`);
+  } else {
+    lines.push(`${pick.n} (DVS ${pick.dvs}) is the best blend of ADP value and positional availability in this window.`);
+  }
+
+  // Sentence 2: survival / next-pick context
+  if(nextPick){
+    const nextWin=adpWin(nextPick.ov);
+    const nextSame=avail.filter(p=>p.p===pick.p&&p.adp>pick.adp&&p.adp<=nextWin.hi);
+    if(nextSame.length===0){
+      lines.push(`No comparable ${pick.p} projects into your ${plbl(nextPick.ov)} window — this is a now-or-never tier.`);
+    } else if(nextSame.length>=4){
+      lines.push(`${nextSame.length} ${pick.p}s of similar value likely survive to ${plbl(nextPick.ov)}, giving you some flexibility, but ${pick.n} is the clear top of this group.`);
+    } else {
+      lines.push(`Only ${nextSame.length} comparable ${pick.p}${nextSame.length===1?'':'s'} project into ${plbl(nextPick.ov)} — moderate risk if you wait on this position.`);
+    }
+  }
+
+  // Sentence 3: alt callout or roster construction
+  const alt0=alts[0];
+  if(alt0&&alt0.p!==pick.p&&Math.abs(alt0.dvs-pick.dvs)<=6){
+    lines.push(`${alt0.n} (${alt0.p}, DVS ${alt0.dvs}) is a real pivot if you'd rather add ${alt0.p} depth — your current roster has ${c[alt0.p]||0} ${alt0.p}.`);
+  } else if(round<=5&&(c.RB||0)<2&&pick.p!=='RB'){
+    lines.push(`Still only ${c.RB||0} RB on your roster — if value converges, consider pivoting to RB here.`);
+  } else if(round<=7&&(c.WR||0)<2&&pick.p!=='WR'){
+    lines.push(`WR depth is thin (${c.WR||0} so far) — watch for WR value opportunities at this pick.`);
+  } else if(alt0){
+    lines.push(`${alt0.n} (DVS ${alt0.dvs}) is the closest alternative if you want ${alt0.p} depth instead.`);
+  }
+
+  return lines.join(' ');
+}
+
+function altWhy(alt,pick,nextPick){
+  const avail=availAll();
+  if(!nextPick)return`Best ${alt.p} available in this ADP window.`;
+  const nextWin=adpWin(nextPick.ov);
+  const survive=avail.filter(p=>p.p===alt.p&&p.adp>alt.adp&&p.adp<=nextWin.hi);
+  if(alt.p===pick.p){
+    return`Same position, slightly lower DVS — take if you trust ${alt.n}'s upside over ${pick.n}.`;
+  }
+  if(survive.length>=3){
+    return`${survive.length} ${alt.p}s survive to ${plbl(nextPick.ov)} — can wait, but ${alt.n} is the top now.`;
+  }
+  return`Strong ${alt.p} value; tier thins after this pick.`;
+}
+
+function getRecommendation(myPickOv){
+  const avail=availAll();
+  const{lo,hi}=adpWin(myPickOv);
+  const windowed=avail.filter(p=>p.adp>=lo&&p.adp<=hi);
+  if(!windowed.length)return null;
+  const nxt=MY.find(p=>p.ov>myPickOv);
+  const nextOv=nxt?.ov;
+  const scored=windowed
+    .map(p=>({...p,dvs:calcDVS(p),score:scorePlayer(p,nextOv)}))
+    .sort((a,b)=>b.score-a.score);
+  const pick=scored[0];
+  const alts=scored.slice(1,3);
+  return{pick,alts,rationale:buildRationale(pick,alts,nxt),nextPick:nxt};
+}
+
+// ── LOOKAHEAD STRATEGY BLURB ──────────────────────────────────────────────────
+function lookaheadBlurb(pickOv){
+  const avail=availAll();
+  const{lo,hi}=adpWin(pickOv);
+  const windowed=avail.filter(p=>p.adp>=lo&&p.adp<=hi);
+  const round=rnd(pickOv);
+  if(!windowed.length)return'Slim pickings in this window — flex pick or best available.';
+
+  const byPos={};
+  windowed.forEach(p=>{
+    const dvs=calcDVS(p);
+    if(!byPos[p.p])byPos[p.p]={max:0,count:0,top:null};
+    byPos[p.p].count++;
+    if(dvs>byPos[p.p].max){byPos[p.p].max=dvs;byPos[p.p].top=p;}
+  });
+
+  const sorted=Object.entries(byPos).sort((a,b)=>b[1].max-a[1].max);
+  const top=sorted[0],second=sorted[1];
+  if(!top)return'Assess value at this pick.';
+
+  if(round>=12){
+    if(byPos.K||byPos.DST)
+      return`R${round} — K/DST window. Lock in a kicker (distance÷10 scoring rewards long-range specialists) or DST before the end-round scramble.`;
+  }
+  if(round>=10){
+    return`R${round} depth round — ${top[0]} leads this window (peak DVS ${top[1].max}, ${top[1].count} options). Target upside and handcuff value.`;
+  }
+  if(second&&top[1].max-second[1].max<=5){
+    return`${top[0]} (peak DVS ${top[1].max}) and ${second[0]} (${second[1].max}) are neck-and-neck here — let roster need be the tiebreaker.`;
+  }
+  if(second&&top[1].max>=(second[1].max||0)+10){
+    return`DVS clearly favors ${top[0]} in this window (peak ${top[1].max} vs. ${second[0]} at ${second[1].max}) — lean ${top[0]} unless already loaded at the position.`;
+  }
+  return`${top[0]} leads this window (peak DVS ${top[1].max}, ${top[1].count} available)${second?` — ${second[0]} close at ${second[1].max}`:''}. Target by roster need.`;
+}
+
+// ── ROSTER SLOTS ──────────────────────────────────────────────────────────────
 const SLOTS=[
   {id:'QB', lbl:'QB',  el:['QB']},
   {id:'RB1',lbl:'RB',  el:['RB']},
@@ -409,35 +594,28 @@ const SLOTS=[
   {id:'IR', lbl:'IR',  el:['QB','RB','WR','TE','K','DST']},
 ];
 const SEPS=new Set(['FLX','K','B1']);
-
 function buildSlots(){
   const s=SLOTS.map(x=>({...x,pl:null}));
-  for(const pl of myRos()){
-    const slot=s.find(x=>x.pl===null&&x.el.includes(pl.p));
-    if(slot)slot.pl=pl;
-  }
+  for(const pl of myRos()){const slot=s.find(x=>x.pl===null&&x.el.includes(pl.p));if(slot)slot.pl=pl;}
   return s;
 }
 
-// ── RENDER: HEADER ────────────────────────────────────────────────
+// ── RENDER: HEADER ────────────────────────────────────────────────────────────
 function renderHdr(){
   document.getElementById('hd-pick').textContent=`Pick ${cur} / ${TOTAL}`;
-  const info=MY.find(p=>p.ov>=cur);
-  document.getElementById('hd-sub').textContent=cur>TOTAL?'Draft Complete':`Round ${rnd(cur)} · Pick ${DPOS} of ${TEAMS}`;
+  document.getElementById('hd-sub').textContent=cur>TOTAL?'Draft Complete':`Round ${rnd(cur)}`;
   const b=document.getElementById('clock-badge');
   if(cur>TOTAL){b.className='clock-badge';b.textContent='Done';return;}
-  if(onClock()){
-    b.className='clock-badge live';
-    b.textContent=`ON CLOCK — ${plbl(cur)}`;
-  } else {
+  const info=MY.find(p=>p.ov>=cur);
+  if(onClock()){b.className='clock-badge live';b.textContent=`ON CLOCK — ${plbl(cur)}`;}
+  else if(info){
     b.className='clock-badge';
-    if(!info){b.textContent='Done';return;}
     const d=info.ov-cur;
     b.textContent=d===1?`1 pick away — ${plbl(info.ov)}`:`${d} picks away — ${plbl(info.ov)}`;
-  }
+  } else {b.className='clock-badge';b.textContent='Done';}
 }
 
-// ── RENDER: TRACK ─────────────────────────────────────────────────
+// ── RENDER: TRACK ─────────────────────────────────────────────────────────────
 function renderTrack(){
   document.getElementById('track-dots').innerHTML=MY.map(pk=>{
     let dc='t-dot',rc='t-rnd';
@@ -448,23 +626,30 @@ function renderTrack(){
   }).join('');
 }
 
-// ── RENDER: BOARD ─────────────────────────────────────────────────
+// ── RENDER: BOARD ─────────────────────────────────────────────────────────────
 function renderBoard(){
   const q=document.getElementById('bsrch').value.trim();
   const gn=gone();
   let list=PLAYERS.filter(p=>!gn.has(p.adp));
   if(filt!=='ALL')list=list.filter(p=>p.p===filt);
   if(q)list=list.filter(p=>fuzzy(q,p.n));
+
+  const sn=scarcitySummary();
+  const se=document.getElementById('scarcity-note');
+  se.textContent=sn;
+  se.style.color=sn?'var(--te)':'var(--muted)';
+
   const el=document.getElementById('player-list');
   if(!list.length){el.innerHTML='<div class="empty-st">No players match</div>';return;}
   el.innerHTML=list.map(p=>{
+    const dvs=calcDVS(p);
     const isTgt=TARGETS.has(p.n);
     return`<div class="pi${isTgt?' tgt':''}">
       <span class="padp">${p.adp}</span>
       <span class="pb ${p.p}">${p.p}</span>
-      <span class="pn">${p.n}${isTgt?'<span class="ttag"> ★</span>':''}</span>
+      <span class="pn">${p.n}${isTgt?'<span class="ttag">★</span>':''}</span>
       <div class="pr">
-        <span class="dvs" style="color:${DC(p.dvs)}">${p.dvs}</span>
+        <span class="dvs" style="color:${dvsColor(dvs)}">${dvs}</span>
         <div class="pacts">
           <button class="qa t" onclick="qp(${p.adp},false)">T</button>
           <button class="qa m" onclick="qp(${p.adp},true)">M</button>
@@ -474,46 +659,86 @@ function renderBoard(){
   }).join('');
 }
 
-// ── RENDER: LOOKAHEAD ─────────────────────────────────────────────
+// ── RENDER: LOOKAHEAD ─────────────────────────────────────────────────────────
 function renderLk(){
   const el=document.getElementById('lk-body');
   const gn=gone();
-  const av=PLAYERS.filter(p=>!gn.has(p.adp));
-  const upcoming=MY.filter(p=>p.ov>=cur).slice(0,3);
+  const avail=PLAYERS.filter(p=>!gn.has(p.adp));
+  const upcoming=MY.filter(p=>p.ov>=cur).slice(0,5);
   if(!upcoming.length){el.innerHTML='<div class="empty-st">Draft complete</div>';return;}
+
   const PO=['RB','WR','QB','TE','K','DST'];
   let h='';
+
   upcoming.forEach((pk,i)=>{
-    const {lo,hi}=win(pk.ov);
-    const wd=av.filter(p=>p.adp>=lo&&p.adp<=hi);
-    const byP={};
-    wd.forEach(p=>{(byP[p.p]=byP[p.p]||[]).push(p);});
-    const lbl=i===0?(onClock()?'NOW ON CLOCK':'NEXT PICK'):i===1?'R+1':'R+2';
-    const lc=i===0?'lk-label live':'lk-label';
+    const isFirst=i===0;
+    const{lo,hi}=adpWin(pk.ov);
+    const wd=avail.filter(p=>p.adp>=lo&&p.adp<=hi);
+    const lbl=isFirst?(onClock()?'NOW ON CLOCK':'NEXT PICK'):
+               i===1?'R+1':i===2?'R+2':i===3?'R+3':'R+4';
     h+=`<div class="lk-block">
-      <div class="${lc}">${lbl}</div>
+      <div class="lk-label${isFirst?' live':''}">${lbl}</div>
       <div class="lk-pick">${plbl(pk.ov)}</div>
       <div class="lk-win">ADP window ${lo}–${hi}</div>`;
+
+    if(isFirst){
+      // Full recommendation block for current/next pick
+      const rec=getRecommendation(pk.ov);
+      if(rec){
+        const{pick,alts,rationale,nextPick}=rec;
+        const pdvs=calcDVS(pick);
+        h+=`<div class="rec-block">
+          <div class="rec-header">
+            <span class="rec-arrow">→ PICK</span>
+            <span class="rec-name">${pick.n}</span>
+            <span class="pb ${pick.p}" style="flex-shrink:0;font-size:9px">${pick.p}</span>
+            <span class="rec-dvs">${pdvs}</span>
+          </div>
+          <div class="rec-rationale">${rationale}</div>`;
+        if(alts.length){
+          h+=`<div class="rec-alts-label">Alternatives</div>`;
+          alts.forEach(alt=>{
+            const advs=calcDVS(alt);
+            const why=altWhy(alt,pick,nextPick);
+            h+=`<div class="rec-alt">
+              <span class="pb ${alt.p}" style="font-size:9px;padding:2px 4px;flex-shrink:0">${alt.p}</span>
+              <span class="rec-alt-name">${alt.n}</span>
+              <span class="rec-alt-why">${why}</span>
+              <span class="rec-alt-dvs" style="color:${dvsColor(advs)}">${advs}</span>
+            </div>`;
+          });
+        }
+        h+=`</div>`;
+      }
+    } else {
+      // Strategy blurb for future picks
+      h+=`<div class="lk-strat">${lookaheadBlurb(pk.ov)}</div>`;
+    }
+
+    // Position chips (all picks)
+    const byPos={};
+    wd.forEach(p=>{(byPos[p.p]=byPos[p.p]||[]).push(p);});
     PO.forEach(pos=>{
-      const ps=byP[pos];if(!ps?.length)return;
+      const ps=byPos[pos];if(!ps?.length)return;
+      const sorted=[...ps].sort((a,b)=>calcDVS(b)-calcDVS(a));
       h+=`<div class="lk-pg">
         <div class="lk-pl ${pos}">${pos}<span class="lk-cnt">${ps.length}</span></div>
-        <div class="lk-chips">
-          ${ps.map(p=>{
-            const isTgt=TARGETS.has(p.n);
-            const last=p.n.split(' ').slice(-1)[0];
-            return`<span class="lk-chip${isTgt?' tgt':''}">${last}<span>${p.dvs}</span></span>`;
-          }).join('')}
-        </div>
+        <div class="lk-chips">${sorted.map(p=>{
+          const dvs=calcDVS(p);
+          const isTgt=TARGETS.has(p.n);
+          const last=p.n.split(' ').slice(-1)[0];
+          return`<span class="lk-chip${isTgt?' tgt':''}">${last}<span>${dvs}</span></span>`;
+        }).join('')}</div>
       </div>`;
     });
+
     h+=`</div>`;
     if(i<upcoming.length-1)h+=`<div class="lk-div"></div>`;
   });
   el.innerHTML=h;
 }
 
-// ── RENDER: ROSTER ────────────────────────────────────────────────
+// ── RENDER: ROSTER ────────────────────────────────────────────────────────────
 function renderRoster(){
   const slots=buildSlots();
   document.getElementById('rs-body').innerHTML=slots.map(s=>{
@@ -527,39 +752,30 @@ function renderRoster(){
   }).join('');
 }
 
-// ── RENDER: UNDO ──────────────────────────────────────────────────
+// ── RENDER: UNDO ──────────────────────────────────────────────────────────────
 function renderUndo(){
   const strip=document.getElementById('undo-strip');
   if(!log.length){strip.style.display='none';return;}
   strip.style.display='flex';
   const last=log[log.length-1];
-  document.getElementById('undo-lbl').textContent=`Last: ${last.pl.n} (${last.mine?'my pick':'their pick'})`;
+  document.getElementById('undo-lbl').textContent=`Last: ${last.pl.n} (${last.mine?'mine':'theirs'})`;
 }
 
-// ── FULL RENDER ───────────────────────────────────────────────────
+// ── FULL RENDER ───────────────────────────────────────────────────────────────
 function render(){renderHdr();renderTrack();renderBoard();renderLk();renderRoster();renderUndo();}
 
-// ── ACTIONS ───────────────────────────────────────────────────────
-function draftPl(pl,mine){
-  log.push({pl,mine});cur++;sel=null;clearIn();render();
-}
-function qp(adp,mine){
-  const pl=PLAYERS.find(p=>p.adp===adp);
-  if(pl)draftPl(pl,mine);
-}
+// ── ACTIONS ───────────────────────────────────────────────────────────────────
+function draftPl(pl,mine){log.push({pl,mine});cur++;sel=null;clearIn();render();}
+function qp(adp,mine){const pl=PLAYERS.find(p=>p.adp===adp);if(pl)draftPl(pl,mine);}
 function commitPick(mine){if(sel)draftPl(sel,mine);}
-function undoLast(){
-  if(!log.length)return;
-  log.pop();cur=Math.max(1,cur-1);render();
-}
+function undoLast(){if(!log.length)return;log.pop();cur=Math.max(1,cur-1);render();}
 function setFilt(pos,btn){
   filt=pos;
   document.querySelectorAll('.pf').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  renderBoard();
+  btn.classList.add('active');renderBoard();
 }
 
-// ── AUTOCOMPLETE ─────────────────────────────────────────────────
+// ── AUTOCOMPLETE ──────────────────────────────────────────────────────────────
 function acCands(q){
   if(!q)return[];
   const gn=gone();
@@ -577,8 +793,7 @@ function renderAc(cands){
   drop.classList.remove('hidden');
 }
 function selAc(adp){
-  const pl=PLAYERS.find(p=>p.adp===adp);
-  if(!pl)return;
+  const pl=PLAYERS.find(p=>p.adp===adp);if(!pl)return;
   sel=pl;
   document.getElementById('pi-inp').value=pl.n;
   document.getElementById('ac-drop').classList.add('hidden');
@@ -597,22 +812,18 @@ function onAcIn(){
   sel=null;
   document.getElementById('btn-t').disabled=true;
   document.getElementById('btn-m').disabled=true;
-  acIdx=-1;
-  renderAc(acCands(q));
+  acIdx=-1;renderAc(acCands(q));
 }
 function onAcKey(e){
   const q=document.getElementById('pi-inp').value.trim();
   const cs=acCands(q);
   if(e.key==='ArrowDown'){e.preventDefault();acIdx=Math.min(acIdx+1,cs.length-1);renderAc(cs);}
   else if(e.key==='ArrowUp'){e.preventDefault();acIdx=Math.max(acIdx-1,-1);renderAc(cs);}
-  else if(e.key==='Enter'){
-    if(acIdx>=0&&cs[acIdx])selAc(cs[acIdx].adp);
-    else if(cs.length===1)selAc(cs[0].adp);
-  }
+  else if(e.key==='Enter'){if(acIdx>=0&&cs[acIdx])selAc(cs[acIdx].adp);else if(cs.length===1)selAc(cs[0].adp);}
   else if(e.key==='Escape')document.getElementById('ac-drop').classList.add('hidden');
 }
 
-// ── TABS ─────────────────────────────────────────────────────────
+// ── TABS ──────────────────────────────────────────────────────────────────────
 function switchTab(tab,btn){
   document.querySelectorAll('.tab-bar button').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
@@ -620,7 +831,7 @@ function switchTab(tab,btn){
   document.getElementById('panel-'+tab).classList.add('tab-on');
 }
 
-// ── INIT ─────────────────────────────────────────────────────────
+// ── INIT ──────────────────────────────────────────────────────────────────────
 render();
 </script>
 </body>
