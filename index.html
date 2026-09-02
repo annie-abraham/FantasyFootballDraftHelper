@@ -254,7 +254,7 @@ const PLAYERS=[
   {n:"Jahmyr Gibbs",p:"RB",adp:1},{n:"Bijan Robinson",p:"RB",adp:2},
   {n:"Ja'Marr Chase",p:"WR",adp:3},{n:"Puka Nacua",p:"WR",adp:4},
   {n:"Christian McCaffrey",p:"RB",adp:5},{n:"Jonathan Taylor",p:"RB",adp:6},
-  {n:"Jaxon Smith-Njigba",p:"WR",adp:7},{n:"Amon-Ra St. Brown",p:"WR",adp:8},
+  {n:"Amon-Ra St. Brown",p:"WR",adp:7},{n:"Jaxon Smith-Njigba",p:"WR",adp:8},
   {n:"James Cook",p:"RB",adp:9},{n:"CeeDee Lamb",p:"WR",adp:10},
   {n:"Saquon Barkley",p:"RB",adp:11},{n:"Justin Jefferson",p:"WR",adp:12},
   {n:"Ashton Jeanty",p:"RB",adp:13},{n:"De'Von Achane",p:"RB",adp:14},
@@ -331,13 +331,13 @@ const PLAYERS=[
   {n:"Omar Cooper",p:"WR",adp:155},{n:"MarShawn Lloyd",p:"RB",adp:156},
   {n:"Malik Washington",p:"WR",adp:157},{n:"Tank Dell",p:"WR",adp:158},
   {n:"T.J. Hockenson",p:"TE",adp:159},{n:"Juwan Johnson",p:"TE",adp:160},
-  {n:"Fernando Mendoza",p:"QB",adp:161},{n:"Tyler Shough",p:"QB",adp:162},
-  {n:"Tre Tucker",p:"WR",adp:163},{n:"Dylan Sampson",p:"RB",adp:164},
-  {n:"Braelon Allen",p:"RB",adp:165},{n:"AJ Barner",p:"TE",adp:166},
-  {n:"Malik Willis",p:"QB",adp:167},{n:"Chig Okonkwo",p:"TE",adp:168},
-  {n:"Nicholas Singleton",p:"RB",adp:169},{n:"Jalen McMillan",p:"WR",adp:170},
-  {n:"Jauan Jennings",p:"WR",adp:171},{n:"Emmett Johnson",p:"RB",adp:172},
-  {n:"Keenan Allen",p:"WR",adp:173},{n:"Cooper Kupp",p:"WR",adp:174},
+  {n:"Tyler Shough",p:"QB",adp:161},{n:"Tre Tucker",p:"WR",adp:162},
+  {n:"Dylan Sampson",p:"RB",adp:163},{n:"Braelon Allen",p:"RB",adp:164},
+  {n:"AJ Barner",p:"TE",adp:165},{n:"Malik Willis",p:"QB",adp:166},
+  {n:"Chig Okonkwo",p:"TE",adp:167},{n:"Nicholas Singleton",p:"RB",adp:168},
+  {n:"Jalen McMillan",p:"WR",adp:169},{n:"Jauan Jennings",p:"WR",adp:170},
+  {n:"Emmett Johnson",p:"RB",adp:171},{n:"Keenan Allen",p:"WR",adp:172},
+  {n:"Caleb Douglas",p:"WR",adp:173},{n:"Cooper Kupp",p:"WR",adp:174},
   {n:"Dontayvion Wicks",p:"WR",adp:175},{n:"Terrance Ferguson",p:"TE",adp:176},
   {n:"C.J. Stroud",p:"QB",adp:177},{n:"Pat Bryant",p:"WR",adp:178},
   {n:"Dalton Schultz",p:"TE",adp:179},{n:"Ray Davis",p:"RB",adp:180},
@@ -367,6 +367,31 @@ const PLAYERS=[
 
 const TARGETS=new Set(["De'Zhaun Stribling","MarShawn Lloyd"]);
 const SKILL=['QB','RB','WR','TE'];
+// Known handcuff pairs — verified against new team assignments
+const HC={
+  "Bijan Robinson":"Brian Robinson",         // ATL–ATL
+  "Brian Robinson":"Bijan Robinson",         // ATL–ATL
+  "Kyren Williams":"Blake Corum",            // LAR–LAR
+  "Blake Corum":"Kyren Williams",            // LAR–LAR
+  "Breece Hall":"Braelon Allen",             // NYJ–NYJ
+  "James Cook":"Ray Davis",                  // BUF–BUF
+  "Tony Pollard":"Tyjae Spears",             // TEN–TEN
+  "Tyjae Spears":"Nicholas Singleton",       // TEN–TEN
+  "D'Andre Swift":"Kyle Monangai",           // CHI–CHI
+  "Chuba Hubbard":"Jonathon Brooks",         // CAR–CAR
+  "Jonathon Brooks":"Chuba Hubbard",         // CAR–CAR
+  "Josh Jacobs":"MarShawn Lloyd",            // GB–GB (MarShawn Lloyd is a personal target!)
+  "Kenneth Walker":"Emmett Johnson",         // KC–KC
+  "David Montgomery":"Woody Marks",          // HOU–HOU
+  "RJ Harvey":"J.K. Dobbins",               // DEN–DEN
+  "J.K. Dobbins":"RJ Harvey",               // DEN–DEN
+  "Jadarian Price":"Zach Charbonnet",        // SEA–SEA
+  "Zach Charbonnet":"Jadarian Price",        // SEA–SEA
+  "Jordan Mason":"Aaron Jones",              // MIN–MIN
+  "Saquon Barkley":"Tank Bigsby",            // PHI–PHI
+  "Derrick Henry":"Justice Hill",            // BAL–BAL
+  "Travis Etienne":"Alvin Kamara",           // NO–NO
+};
 
 // ── LEAGUE CONFIG ─────────────────────────────────────────────────────────────
 const DPOS=2,TEAMS=12,RNDS=14,TOTAL=TEAMS*RNDS;
@@ -429,7 +454,9 @@ function scarcitySummary(){
 }
 
 // ── RECOMMENDATION ENGINE ─────────────────────────────────────────────────────
-// Roster need bonus — separate from DVS, used only for pick scoring
+// Roster need bonus — separate from DVS, used only for pick scoring.
+// Encodes draft strategy preferences: wait on QB (R5-7+), wait on TE (R4+),
+// K/DST in R12-13, personal targets get a 1-round-early boost.
 function needBonus(pos,roster){
   const c={};roster.forEach(p=>{c[p.p]=(c[p.p]||0)+1;});
   const rb=c.RB||0,wr=c.WR||0,te=c.TE||0,qb=c.QB||0,k=c.K||0,dst=c.DST||0;
@@ -437,10 +464,19 @@ function needBonus(pos,roster){
   switch(pos){
     case'RB':return rb===0?22:rb===1&&round<=6?14:rb===2&&round<=5?6:0;
     case'WR':return wr===0?22:wr===1&&round<=7?14:wr===2&&round<=7?6:0;
-    case'TE':return te===0&&round>=3?12:te===0?5:0;
-    case'QB':return qb===0&&round>=6?10:qb===0&&round>=5?5:0;
-    case'K': return k===0&&round>=11?18:0;
-    case'DST':return dst===0&&round>=11?18:0;
+    // TE: wait strategy — penalize R1-3, reward only R4+
+    case'TE':
+      if(round<=2)return -14;
+      if(round===3)return te===0?-4:0;
+      return te===0&&round>=4?10:0;
+    // QB: wait strategy — strongly penalize R1-4, only reward R6+
+    case'QB':
+      if(round<=4)return -18;
+      if(round===5)return qb===0?-5:0;
+      return qb===0&&round>=6?10:qb===0&&round>=8?14:0;
+    // K/DST: prefer R12-13, not automatically R14
+    case'K': return k===0&&round>=12?20:k===0&&round===11?6:0;
+    case'DST':return dst===0&&round>=12?20:dst===0&&round===11?6:0;
     default:return 0;
   }
 }
@@ -458,7 +494,19 @@ function survBonus(player,nextPickOv){
 }
 
 function scorePlayer(pl,nextPickOv){
-  return calcDVS(pl)+needBonus(pl.p,myRos())+survBonus(pl,nextPickOv);
+  // Personal targets: valued ~1 round higher than ADP to secure them early
+  const targetBonus=TARGETS.has(pl.n)?16:0;
+  // Handcuff bonus: if user drafted the starter, their HC is more valuable
+  const roster=myRos();
+  const hcBonus=(()=>{
+    const round=rnd(cur);
+    if(round<8||pl.p!=='RB')return 0;
+    // Is this player a handcuff for someone the user drafted?
+    const myStarters=roster.filter(r=>r.p==='RB').map(r=>r.n);
+    const isHC=myStarters.some(s=>HC[s]===pl.n);
+    return isHC?12:0;
+  })();
+  return calcDVS(pl)+needBonus(pl.p,roster)+survBonus(pl,nextPickOv)+targetBonus+hcBonus;
 }
 
 function buildRationale(pick,alts,nextPick){
@@ -473,8 +521,21 @@ function buildRationale(pick,alts,nextPick){
   const round=rnd(cur);
   const lines=[];
 
+  // Personal target callout
+  if(TARGETS.has(pick.n)){
+    const adpRound=rnd(pick.adp);
+    lines.push(`${pick.n} is one of your personal targets — you've indicated comfort drafting ~1 round early (Sleeper ADP suggests R${adpRound}) to secure him rather than risk losing him.`);
+  }
+
   // Sentence 1: why this pick / position
-  if(SKILL.includes(pick.p)&&posCount<avg*0.72){
+  else if(pick.p==='QB'&&round>=5){
+    lines.push(`${pick.n} is the top QB available in this window (DVS ${pick.dvs}) — given your wait-on-QB strategy, R${round} is now the right time to address the position.`);
+  } else if(pick.p==='QB'&&round<=4){
+    // Should rarely happen due to needBonus penalty but cover it
+    lines.push(`${pick.n} offers unusual early value (DVS ${pick.dvs}) — this is an exception to your wait-on-QB preference. Proceed only if the value gap over RB/WR alternatives is significant.`);
+  } else if(pick.p==='TE'&&round<=3){
+    lines.push(`${pick.n} represents an unusually large TE value fall — this is the exception scenario where elite TE value overrides your general wait strategy.`);
+  } else if(SKILL.includes(pick.p)&&posCount<avg*0.72){
     lines.push(`${pick.p}s are running scarce (${posCount} remaining vs. ~${Math.round(avg)} avg at other positions) — their DVS reflects this premium and waiting risks missing the value tier.`);
   } else if(pick.dvs>=72){
     lines.push(`${pick.n} grades highest in this ADP window (DVS ${pick.dvs}) — clear top-of-tier value available right now.`);
@@ -486,25 +547,41 @@ function buildRationale(pick,alts,nextPick){
   if(nextPick){
     const nextWin=adpWin(nextPick.ov);
     const nextSame=avail.filter(p=>p.p===pick.p&&p.adp>pick.adp&&p.adp<=nextWin.hi);
-    if(nextSame.length===0){
+    if(TARGETS.has(pick.n)){
+      // For personal targets, frame it as personal valuation vs. ADP
+      if(nextSame.length>=2){
+        lines.push(`His Sleeper ADP suggests he may survive to ${plbl(nextPick.ov)}, but given your personal valuation, take him now rather than risk it.`);
+      } else {
+        lines.push(`Unlikely to survive to ${plbl(nextPick.ov)} — taking him now aligns with your stated preference.`);
+      }
+    } else if(nextSame.length===0){
       lines.push(`No comparable ${pick.p} projects into your ${plbl(nextPick.ov)} window — this is a now-or-never tier.`);
     } else if(nextSame.length>=4){
-      lines.push(`${nextSame.length} ${pick.p}s of similar value likely survive to ${plbl(nextPick.ov)}, giving you some flexibility, but ${pick.n} is the clear top of this group.`);
+      lines.push(`${nextSame.length} ${pick.p}s of similar value likely survive to ${plbl(nextPick.ov)}, giving you flexibility, but ${pick.n} is the clear top of this group.`);
     } else {
       lines.push(`Only ${nextSame.length} comparable ${pick.p}${nextSame.length===1?'':'s'} project into ${plbl(nextPick.ov)} — moderate risk if you wait on this position.`);
     }
   }
 
-  // Sentence 3: alt callout or roster construction
-  const alt0=alts[0];
-  if(alt0&&alt0.p!==pick.p&&Math.abs(alt0.dvs-pick.dvs)<=6){
-    lines.push(`${alt0.n} (${alt0.p}, DVS ${alt0.dvs}) is a real pivot if you'd rather add ${alt0.p} depth — your current roster has ${c[alt0.p]||0} ${alt0.p}.`);
-  } else if(round<=5&&(c.RB||0)<2&&pick.p!=='RB'){
-    lines.push(`Still only ${c.RB||0} RB on your roster — if value converges, consider pivoting to RB here.`);
-  } else if(round<=7&&(c.WR||0)<2&&pick.p!=='WR'){
-    lines.push(`WR depth is thin (${c.WR||0} so far) — watch for WR value opportunities at this pick.`);
-  } else if(alt0){
-    lines.push(`${alt0.n} (DVS ${alt0.dvs}) is the closest alternative if you want ${alt0.p} depth instead.`);
+  // Sentence 3: roster construction, handcuff callout, or alt
+  const myRBs=roster.filter(r=>r.p==='RB').map(r=>r.n);
+  const hcStarter=myRBs.find(s=>HC[s]&&!gone().has(PLAYERS.find(p=>p.n===HC[s])?.adp));
+  if(round>=9&&hcStarter&&HC[hcStarter]){
+    const hcName=HC[hcStarter];
+    lines.push(`Consider targeting ${hcName} as a handcuff for your ${hcStarter} — if ${hcStarter} goes down, ${hcName} is the direct upside.`);
+  } else if(round>=14){
+    lines.push(`R14 — prioritize ceiling over median. Sleepers, handcuffs, and upside lottery tickets over safe depth.`);
+  } else {
+    const alt0=alts[0];
+    if(alt0&&alt0.p!==pick.p&&Math.abs(alt0.dvs-pick.dvs)<=6){
+      lines.push(`${alt0.n} (${alt0.p}, DVS ${alt0.dvs}) is a real pivot if you'd rather add ${alt0.p} depth — your current roster has ${c[alt0.p]||0} ${alt0.p}.`);
+    } else if(round<=5&&(c.RB||0)<2&&pick.p!=='RB'){
+      lines.push(`Still only ${c.RB||0} RB on your roster — if value converges, consider pivoting to RB here.`);
+    } else if(round<=7&&(c.WR||0)<2&&pick.p!=='WR'){
+      lines.push(`WR depth is thin (${c.WR||0} so far) — watch for WR value at this pick.`);
+    } else if(alt0){
+      lines.push(`${alt0.n} (DVS ${alt0.dvs}) is the closest alternative if you want ${alt0.p} depth instead.`);
+    }
   }
 
   return lines.join(' ');
@@ -512,14 +589,24 @@ function buildRationale(pick,alts,nextPick){
 
 function altWhy(alt,pick,nextPick){
   const avail=availAll();
+  const round=rnd(cur);
+  if(TARGETS.has(alt.n)){
+    return`Personal target — you value him ~1 round above ADP. Take here if you want to guarantee him.`;
+  }
+  if(alt.p==='QB'&&round<=4){
+    return`Early QB — generally against your wait strategy. Only if the value gap is exceptional.`;
+  }
+  if(alt.p==='TE'&&round<=3){
+    return`Early TE — exception case only; your preference is to defer TE unless elite value falls.`;
+  }
   if(!nextPick)return`Best ${alt.p} available in this ADP window.`;
   const nextWin=adpWin(nextPick.ov);
   const survive=avail.filter(p=>p.p===alt.p&&p.adp>alt.adp&&p.adp<=nextWin.hi);
   if(alt.p===pick.p){
-    return`Same position, slightly lower DVS — take if you trust ${alt.n}'s upside over ${pick.n}.`;
+    return`Same position, slightly lower DVS — take if you prefer ${alt.n}'s upside.`;
   }
   if(survive.length>=3){
-    return`${survive.length} ${alt.p}s survive to ${plbl(nextPick.ov)} — can wait, but ${alt.n} is the top now.`;
+    return`${survive.length} ${alt.p}s survive to ${plbl(nextPick.ov)} — can wait, but this is the tier leader now.`;
   }
   return`Strong ${alt.p} value; tier thins after this pick.`;
 }
